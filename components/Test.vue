@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>TestComp</div>
+    <div>TestComp2</div>
     <div>{{ p }}</div>
   </div>
 </template>
