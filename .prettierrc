@@ -1,0 +1,11 @@
+{
+  "semi": false,
+  "overrides": [
+    {
+      "files": ["*.html"],
+      "options": {
+        "tabWidth": 4
+      }
+    }
+  ]
+}
