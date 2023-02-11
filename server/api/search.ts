@@ -28,14 +28,17 @@ export default defineEventHandler(async (event): Promise<SearchResult> => {
         query: {
             keyword: body.keyword,
             "f-contents": ["thumb"],
+            exists: ["common.description"],
             size: 10
         }
 
     }) as SearchResult
+    if (response.list.length > 0) {
+        response.list[3]
 
-    response.list[3]
+        const desc = await genGpt("Q:" + response.list[3].common.title + "の特徴は？")
+        response.list[3].common.description = desc.replace(/A:/g, "")
+    }
 
-    const desc = await genGpt("Q:" + response.list[3].common.title + "の特徴は？")
-    response.list[3].common.description = desc.replace(/^A: /, "")
     return response
 })
