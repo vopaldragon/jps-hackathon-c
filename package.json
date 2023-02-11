@@ -10,5 +10,9 @@
   "devDependencies": {
     "nuxt": "^3.1.2",
     "prettier": "^2.8.4"
+  },
+  "dependencies": {
+    "openai": "^3.1.0",
+    "ts-node": "^10.9.1"
   }
 }
