@@ -10,7 +10,7 @@
       <div>
         <input type="text" v-model="prompt" class="inputField" />
       </div>
-      <button type="submit">GO!</button>
+      <button v-if="file && prompt" type="submit">GO!</button>
     </form>
 
     <div v-if="state.isProcessing">
