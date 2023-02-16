@@ -14,6 +14,7 @@
             <tr class="search-item">
               <th></th>
               <th>タイトル</th>
+              <th>id</th>
               <th>解説</th>
               <th>DB</th>
               <th>リンク</th>
@@ -25,6 +26,9 @@
                 <img :src="item.common.thumbnailUrl[0]" />
               </td>
               <td>{{ item.common.title }}</td>
+              <td>
+                {{ item.id }}
+              </td>
               <td>{{ item.common.description }}</td>
               <td>{{ item.common.database }}</td>
               <td>
