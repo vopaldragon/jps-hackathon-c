@@ -21,12 +21,14 @@
           </thead>
           <tbody>
             <tr class="search-item" v-for="item in result">
-              <td><img :src="item.common.thumbnailUrl" /></td>
+              <td>
+                <img :src="item.common.thumbnailUrl[0]" />
+              </td>
               <td>{{ item.common.title }}</td>
               <td>{{ item.common.description }}</td>
               <td>{{ item.common.database }}</td>
               <td>
-                <a :href="item.common.linkUrl">🔗</a>
+                <a target="_blank" :href="item.common.linkUrl">🔗</a>
               </td>
             </tr>
           </tbody>
@@ -42,6 +44,7 @@ const route = useRoute()
 const result = ref<any[] | null>(null)
 
 const keyword = ref("")
+const era = ref("")
 
 const loading = ref(false)
 
@@ -123,8 +126,8 @@ main {
     .search-item {
       width: 16rem;
       img {
-        height: 128px;
         object-fit: contain;
+        min-width: 128px;
       }
       td {
         padding: 1rem;
