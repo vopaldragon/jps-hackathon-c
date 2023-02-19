@@ -13,16 +13,13 @@ export default defineEventHandler(async (event) => {
     });
     return obj;
   });
-  const result: Item[] = jsonData.filter((item: any) => item['キーワード'] === body.keyword && item['フェイク'] === body.fake).map((i: { common: { title: string; description: string; thumbnailUrl: string[] } }) => {
+  const result: Item[] = jsonData.filter((item: any) => item['キーワード'] === body.keyword).map((i: { common: { title: string; description: string; thumbnailUrl: string[] } }) => {
     return {
-      id: i['JPSID'] ?? '',
       title: '',
-      description: '',
-      fakeDescription: i['フェイク解説'] ?? '',
+      description: i['フェイク解説'] ?? '',
       show: false,
       fake: true,
-      thumb: '',
-      fakeThumb: i['画像'] ?? ''
+      thumb: i['画像'] ?? ''
     }
   })
   return result

@@ -20,13 +20,10 @@ const genGpt = async (prompt: string) => {
 }
 
 export type Item = {
-    id: string;
     title: string;
     description: string;
-    fakeDescription: string;
     fake: boolean;
     thumb: string;
-    fakeThumb: string;
 }
 
 
