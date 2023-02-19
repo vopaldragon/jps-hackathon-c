@@ -57,7 +57,7 @@
     <div class="foot" v-show="result">
       <input type="checkbox" v-model="showFake" id="Omitooshi" />
       <label for="Omitooshi"><img src="/foot.svg" />おみとおし</label>
-      <div v-if="prompt && showFake">
+      <div v-if="prompt && showFake" class="prompt">
         <h4>フェイク生成プロンプト</h4>
         <p>{{ prompt }}</p>
       </div>
@@ -249,7 +249,7 @@ h1 {
   label {
     border-radius: 16px;
     display: block;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     font-weight: bold;
     border: 3px solid #d30c2f;
   }
@@ -269,6 +269,13 @@ h1 {
       color: white;
     }
   }
+}
+.prompt {
+  margin: 2rem;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #f1f1f1;
+  text-align: left;
 }
 main {
   margin-top: 2rem;
