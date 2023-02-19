@@ -124,14 +124,14 @@ function selectFake(e: string) {
 const loading = ref(false)
 
 async function search() {
-  if (currentKeyword.value && currentFake.value) {
+  if (currentKeyword.value) {
     loading.value = true
     result.value = null
     try {
       result.value = (
-        await useFetch("/api/search", {
+        await useFetch("/api/jpsearch", {
           method: "POST",
-          body: { keyword: currentKeyword.value, fake: currentFake.value },
+          body: { keyword: currentKeyword.value },
         })
       ).data.value
     } catch (e) {
