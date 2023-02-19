@@ -26,6 +26,9 @@
           {{ fake }}
         </button>
       </div>
+      <p v-if="currentKeyword" class="description">
+        ※フェイクで「シンプル」「トンデモ」を選んだ場合、検索結果のうちの一つが機械学習による嘘内容に差し替わります。
+      </p>
     </div>
 
     <main>
@@ -111,22 +114,22 @@ async function search() {
 
 async function getKeywords() {
   const response: any = await $fetch(
-      `https://sheets.googleapis.com/v4/spreadsheets/1ydNpNYQ1g8KAoUWUoQ_6YvgPYEk5k08XnUleNsH-n3I/values/%E6%95%B4%E5%BD%A2%E3%83%87%E3%83%BC%E3%82%BF?key=AIzaSyDNPQiu_z4xWcVUZPVRVrGhpTYMd5pFEns`,
+    `https://sheets.googleapis.com/v4/spreadsheets/1ydNpNYQ1g8KAoUWUoQ_6YvgPYEk5k08XnUleNsH-n3I/values/%E6%95%B4%E5%BD%A2%E3%83%87%E3%83%BC%E3%82%BF?key=AIzaSyDNPQiu_z4xWcVUZPVRVrGhpTYMd5pFEns`
   )
-  const keys = response.values.splice(0, 1)[0];
-  const jsonData = response.values.map(function(row: any[]) {
+  const keys = response.values.splice(0, 1)[0]
+  const jsonData = response.values.map(function (row: any[]) {
     var obj = {}
-    row.map(function(item, index) {
-      obj[keys[index]] = item;
-    });
-    return obj;
-  });
-  const items = jsonData.map((item: any) => item['キーワード'])
+    row.map(function (item, index) {
+      obj[keys[index]] = item
+    })
+    return obj
+  })
+  const items = jsonData.map((item: any) => item["キーワード"])
   keywords.value = new Set(items)
 }
 
 function description(i: any) {
-  const text = i.fakeDescription !== '' ? i.fakeDescription : i.description
+  const text = i.fakeDescription !== "" ? i.fakeDescription : i.description
   if (text.length > 100) {
     if (i.show) {
       return text
