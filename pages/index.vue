@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>
-      <img src="/title.png" alt="Fake Japan Search" />
+      <img src="/title.svg" alt="Fake Japan Search" />
     </h1>
     <p class="description">日本のあることないことを調べよう</p>
     <div class="query">
@@ -162,12 +162,15 @@ $primary: #6941a0;
 h1 {
   display: flex;
   justify-content: center;
+  margin-top: 8rem;
 }
 
 .description {
   display: flex;
   justify-content: center;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
 .query {
@@ -179,6 +182,7 @@ h1 {
   .words {
     display: flex;
     gap: 1rem;
+    align-items: center;
     h2 {
       font-size: 0.875rem;
     }
@@ -195,7 +199,7 @@ h1 {
       border-radius: 9999px;
 
       cursor: pointer;
-      padding: 0.25rem 0.75rem;
+      padding: 0.5rem 1rem;
       font-size: 0.875rem;
       line-height: 0.875rem;
       text-align: center;
@@ -225,13 +229,12 @@ h1 {
   }
 
   .cross {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
   }
 }
 
 main {
   margin-top: 2rem;
-
   .search-result {
     display: flex;
     flex-wrap: wrap;
@@ -239,6 +242,13 @@ main {
     gap: 1rem;
     .search-item {
       width: 16rem;
+      h3 {
+        margin-top: 0.5rem;
+      }
+      p {
+        margin-top: 0.25rem;
+        color: #494949;
+      }
       img {
         height: 256px;
         object-fit: contain;
