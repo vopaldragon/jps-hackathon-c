@@ -2,7 +2,7 @@ import {Item} from '~/server/api/search'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
-  const response: any = await $fetch(
+  const r1 = (await $fetch(
     `https://jpsearch.go.jp/api/item/search/jps-cross`,
     {
       method: "get",
@@ -13,9 +13,20 @@ export default defineEventHandler(async (event) => {
         size: 100,
       },
     }
-  )
+  ))
 
-  const result: Item[] = response.list?.map((i: {
+  const db: { [key: string]: number } = {}
+  const r2 = []
+  for (let item of r1.list) {
+    if (item.common.description.length < 200) continue
+    if (db[item.common.database] > 3) continue
+    r2.push(item)
+    db[item.common.database] = db[item.common.database]
+      ? db[item.common.database] + 1
+      : 1
+  }
+
+  const result: Item[] = r2.map((i: {
     id: string;
     common: { title: string; description: string; thumbnailUrl: string[] } }) => {
     return {
