@@ -18,8 +18,8 @@ export default defineEventHandler(async (event) => {
       title: '',
       description: i['フェイク解説'] ?? '',
       show: false,
-      fake: false,
-      thumb: ""
+      fake: true,
+      thumb: i['画像'] ?? ''
     }
   })
   return result
