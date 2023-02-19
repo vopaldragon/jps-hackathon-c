@@ -6,21 +6,10 @@
     <p class="description">日本のあることないことを調べよう</p>
     <div class="query">
       <div class="words">
-        <h2>時代</h2>
-        <button
-          :class="{ selected: currentEra === era }"
-          v-for="era in eras"
-          @click="selectEra(era)"
-        >
-          {{ era }}
-        </button>
-      </div>
-      <div class="cross" v-if="currentEra">×</div>
-      <div class="words" v-if="currentEra">
         <h2>キーワード</h2>
         <button
           :class="{ selected: currentKeyword === keyword }"
-          v-for="keyword in keywords[currentEra]"
+          v-for="keyword in keywords"
           @click="selectKeyword(keyword)"
         >
           {{ keyword }}
@@ -37,6 +26,9 @@
           {{ fake }}
         </button>
       </div>
+      <p v-if="currentKeyword" class="description">
+        ※フェイクで「シンプル」「トンデモ」を選んだ場合、検索結果のうちの一つが機械学習による嘘内容に差し替わります。
+      </p>
     </div>
 
     <main>
@@ -47,7 +39,7 @@
           :class="{ fake: showFake && item.fake }"
           v-for="item in result"
         >
-          <img :src="item.thumb" />
+          <img :src="item.fakeThumb !== '' ? item.fakeThumb : item.thumb" />
           <h3>{{ item.title }}</h3>
           <p>
             {{ description(item)
@@ -74,43 +66,21 @@ const result = ref<
   | {
       title: string
       description: string
+      fakeDescription: string
       fake: boolean
       show: boolean
       thumb: string
+      fakeThumb: string
     }[]
   | null
 >(null)
 
-const eras = [
-  "縄文・弥生・古墳",
-  "飛鳥",
-  "奈良",
-  "平安",
-  "鎌倉",
-  "室町",
-  "安土桃山",
-  "江戸",
-  "明治",
-  "大正",
-  "昭和",
-  "平成",
-]
-
-const currentEra = ref("")
 const currentKeyword = ref("")
 const currentFake = ref("")
 
-const keywords: { [key: string]: string[] } = {
-  "縄文・弥生・古墳": ["古墳", "埴輪", "縄文土器"],
-  飛鳥: ["A", "B", "C"],
-}
+const keywords = ref([])
 
 const fakes = ["シンプル", "トンデモ", "プレーン"]
-
-function selectEra(e: string) {
-  currentEra.value = e
-  currentKeyword.value = ""
-}
 
 function selectKeyword(e: string) {
   currentKeyword.value = e
@@ -125,14 +95,14 @@ function selectFake(e: string) {
 const loading = ref(false)
 
 async function search() {
-  if (currentKeyword.value) {
+  if (currentKeyword.value && currentFake.value) {
     loading.value = true
     result.value = null
     try {
       result.value = (
         await useFetch("/api/merged", {
           method: "POST",
-          body: { keyword: currentKeyword.value },
+          body: { keyword: currentKeyword.value, fake: currentFake.value },
         })
       ).data.value
     } catch (e) {
@@ -143,19 +113,40 @@ async function search() {
   }
 }
 
+async function getKeywords() {
+  const response: any = await $fetch(
+    `https://sheets.googleapis.com/v4/spreadsheets/1ydNpNYQ1g8KAoUWUoQ_6YvgPYEk5k08XnUleNsH-n3I/values/%E6%95%B4%E5%BD%A2%E3%83%87%E3%83%BC%E3%82%BF?key=AIzaSyDNPQiu_z4xWcVUZPVRVrGhpTYMd5pFEns`
+  )
+  const keys = response.values.splice(0, 1)[0]
+  const jsonData = response.values.map(function (row: any[]) {
+    var obj = {}
+    row.map(function (item, index) {
+      obj[keys[index]] = item
+    })
+    return obj
+  })
+  const items = jsonData.map((item: any) => item["キーワード"])
+  keywords.value = new Set(items)
+}
+
 function description(i: any) {
-  if (i.description.length > 100) {
+  const text = i.fakeDescription !== "" ? i.fakeDescription : i.description
+  if (text.length > 100) {
     if (i.show) {
-      return i.description
+      return text
     } else {
-      return i.description.substring(0, 100) + "..."
+      return text.substring(0, 100) + "..."
     }
   } else {
-    return i.description
+    return text
   }
 }
 
 const showFake = ref(false)
+
+onMounted(() => {
+  getKeywords()
+})
 </script>
 
 <style lang="scss">
