@@ -80,6 +80,8 @@ const result = ref<
   | null
 >(null)
 
+const fakeResult = ref(null)
+
 const eras = [
   "縄文・弥生・古墳",
   "飛鳥",
@@ -118,7 +120,7 @@ function selectKeyword(e: string) {
 
 function selectFake(e: string) {
   currentFake.value = e
-  search()
+  fakeSearch()
 }
 
 const loading = ref(false)
@@ -133,6 +135,25 @@ async function search() {
           method: "POST",
           body: { keyword: currentKeyword.value },
         })
+      ).data.value
+    } catch (e) {
+      alert(e)
+    } finally {
+      loading.value = false
+    }
+  }
+}
+
+async function fakeSearch() {
+  if (currentKeyword.value && currentFake.value) {
+    loading.value = true
+    fakeResult.value = null
+    try {
+      fakeResult.value = (
+          await useFetch("/api/readJson", {
+            method: "POST",
+            body: { keyword: currentKeyword.value },
+          })
       ).data.value
     } catch (e) {
       alert(e)
