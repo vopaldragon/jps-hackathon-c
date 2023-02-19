@@ -26,7 +26,7 @@
           {{ fake }}
         </button>
       </div>
-      <p v-if="currentKeyword" class="description">
+      <p v-if="currentKeyword" class="description callout">
         ※フェイクで「シンプル」「トンデモ」を選んだ場合、検索結果のうちの一つが機械学習による嘘内容に差し替わります。
       </p>
     </div>
@@ -175,6 +175,14 @@ h1 {
   font-weight: bold;
   font-size: 1.5rem;
 }
+.callout {
+  font-size: 1rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  background: #f1f1f1;
+  border-radius: 4px;
+  padding: 0.5rem;
+}
 
 .query {
   display: flex;
@@ -294,7 +302,10 @@ main {
         -webkit-tap-highlight-color: transparent;
       }
       &.fake {
-        border: 1px solid $primary;
+        border: 2px solid #D30C2F;
+        padding: 0.5rem;
+        border-radius: 8px;
+        background: #F9D9DE;
       }
     }
   }
