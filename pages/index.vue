@@ -131,7 +131,7 @@ async function search() {
       result.value = (
         await useFetch("/api/merged", {
           method: "POST",
-          body: { keyword: '忠臣蔵' },
+          body: { keyword: currentKeyword.value },
         })
       ).data.value
     } catch (e) {
