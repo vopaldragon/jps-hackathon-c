@@ -63,7 +63,8 @@
       </div>
     </main>
     <div class="foot" v-show="result">
-      <label><input type="checkbox" v-model="showFake" />おみとおし</label>
+      <input type="checkbox" v-model="showFake" id="Omitooshi"/>
+      <label for="Omitooshi"><img src="/foot.svg"/>おみとおし</label>
     </div>
   </div>
 </template>
@@ -232,7 +233,33 @@ h1 {
     font-size: 2.5rem;
   }
 }
-
+.foot {
+  margin-top: 2rem;
+  text-align:center;
+  label {
+    border-radius: 16px;
+    display: block;
+    margin-bottom: 2rem;
+    font-weight: bold;
+    border: 3px solid #D30C2F;
+  }
+  input[type=checkbox] {
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+    height: 1px;
+    border: 0;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    &:checked + label {
+      background: #D30C2F;
+      color: white;
+    }
+  }
+}
 main {
   margin-top: 2rem;
   .search-result {
