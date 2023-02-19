@@ -47,7 +47,7 @@
           :class="{ fake: showFake && item.fake }"
           v-for="item in result"
         >
-          <img :src="item.thumb" />
+          <img :src="item.fakeThumb !== '' ? item.fakeThumb : item.thumb" />
           <h3>{{ item.title }}</h3>
           <p>
             {{ description(item)
@@ -73,9 +73,11 @@ const result = ref<
   | {
       title: string
       description: string
+      fakeDescription: string
       fake: boolean
       show: boolean
       thumb: string
+      fakeThumb: string
     }[]
   | null
 >(null)
@@ -124,14 +126,14 @@ function selectFake(e: string) {
 const loading = ref(false)
 
 async function search() {
-  if (currentKeyword.value) {
+  if (currentKeyword.value && currentFake.value) {
     loading.value = true
     result.value = null
     try {
       result.value = (
         await useFetch("/api/merged", {
           method: "POST",
-          body: { keyword: currentKeyword.value },
+          body: { keyword: currentKeyword.value, fake: currentFake.value },
         })
       ).data.value
     } catch (e) {
@@ -143,14 +145,15 @@ async function search() {
 }
 
 function description(i: any) {
-  if (i.description.length > 100) {
+  const text = i.fakeDescription !== '' ? i.fakeDescription : i.description
+  if (text.length > 100) {
     if (i.show) {
-      return i.description
+      return text
     } else {
-      return i.description.substring(0, 100) + "..."
+      return text.substring(0, 100) + "..."
     }
   } else {
-    return i.description
+    return text
   }
 }
 
