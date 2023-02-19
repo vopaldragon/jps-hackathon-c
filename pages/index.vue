@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>
-      <img src="/title.png" alt="Fake Japan Search" />
+      <img src="/title.svg" alt="Fake Japan Search" />
     </h1>
     <p class="description">日本のあることないことを調べよう</p>
     <div class="query">
@@ -55,7 +55,8 @@
       </div>
     </main>
     <div class="foot" v-show="result">
-      <label><input type="checkbox" v-model="showFake" />おみとおし</label>
+      <input type="checkbox" v-model="showFake" id="Omitooshi" />
+      <label for="Omitooshi"><img src="/foot.svg" />おみとおし</label>
       <div v-if="prompt && showFake">
         <h4>フェイク生成プロンプト</h4>
         <p>{{ prompt }}</p>
@@ -164,12 +165,15 @@ $primary: #6941a0;
 h1 {
   display: flex;
   justify-content: center;
+  margin-top: 8rem;
 }
 
 .description {
   display: flex;
   justify-content: center;
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
 .query {
@@ -181,6 +185,7 @@ h1 {
   .words {
     display: flex;
     gap: 1rem;
+    align-items: center;
     h2 {
       font-size: 0.875rem;
     }
@@ -197,7 +202,7 @@ h1 {
       border-radius: 9999px;
 
       cursor: pointer;
-      padding: 0.25rem 0.75rem;
+      padding: 0.5rem 1rem;
       font-size: 0.875rem;
       line-height: 0.875rem;
       text-align: center;
@@ -227,13 +232,38 @@ h1 {
   }
 
   .cross {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
   }
 }
-
+.foot {
+  margin-top: 2rem;
+  text-align: center;
+  label {
+    border-radius: 16px;
+    display: block;
+    margin-bottom: 2rem;
+    font-weight: bold;
+    border: 3px solid #d30c2f;
+  }
+  input[type="checkbox"] {
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+    height: 1px;
+    border: 0;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    &:checked + label {
+      background: #d30c2f;
+      color: white;
+    }
+  }
+}
 main {
   margin-top: 2rem;
-
   .search-result {
     display: flex;
     flex-wrap: wrap;
@@ -241,6 +271,13 @@ main {
     gap: 1rem;
     .search-item {
       width: 16rem;
+      h3 {
+        margin-top: 0.5rem;
+      }
+      p {
+        margin-top: 0.25rem;
+        color: #494949;
+      }
       img {
         height: 256px;
         object-fit: contain;
