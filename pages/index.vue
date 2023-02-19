@@ -56,6 +56,10 @@
     </main>
     <div class="foot" v-show="result">
       <label><input type="checkbox" v-model="showFake" />おみとおし</label>
+      <div v-if="prompt && showFake">
+        <h4>フェイク生成プロンプト</h4>
+        <p>{{ prompt }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -70,6 +74,7 @@ const result = ref<
       show: boolean
       thumb: string
       fakeThumb: string
+      gen: string
     }[]
   | null
 >(null)
@@ -93,6 +98,12 @@ function selectFake(e: string) {
 
 const loading = ref(false)
 
+const prompt = computed((v) => {
+  try {
+    return result.value?.filter((v) => v["gen"]).pop()?.gen
+  } catch (e) {}
+  return ""
+})
 async function search() {
   if (currentKeyword.value && currentFake.value) {
     loading.value = true

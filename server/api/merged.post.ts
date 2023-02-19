@@ -1,4 +1,4 @@
-import {Item} from '~/server/api/search'
+import { Item } from '~/server/api/search'
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
@@ -20,6 +20,7 @@ export default defineEventHandler(async (event) => {
         fake: true,
         fakeDescription: fakeItem.fakeDescription,
         fakeThumb: fakeItem.fakeThumb,
+        gen: fakeItem.gen
       }
     } else {
       return item
