@@ -10,18 +10,23 @@ export default defineEventHandler(async (event) => {
         keyword: body.keyword,
         "f-contents": ["thumb"],
         exists: ["common.description"],
-        size: 8,
+        size: 100,
       },
     }
   )
 
-  const result: Item[] = response.list?.map((i: { common: { title: string; description: string; thumbnailUrl: string[] } }) => {
+  const result: Item[] = response.list?.map((i: {
+    id: string;
+    common: { title: string; description: string; thumbnailUrl: string[] } }) => {
     return {
+      id: i.id,
       title: i.common.title,
       description: i.common.description,
+      fakeDescription: '',
       show: false,
       fake: false,
-      thumb: i.common.thumbnailUrl ? i.common.thumbnailUrl[0] : ""
+      thumb: i.common.thumbnailUrl ? i.common.thumbnailUrl[0] : "",
+      fakeThumb: ''
     }
   })
 
