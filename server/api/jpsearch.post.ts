@@ -1,4 +1,4 @@
-import {Item} from '~/server/api/search'
+import { Item } from "~~/server/api/readJson.post"
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)
@@ -28,7 +28,8 @@ export default defineEventHandler(async (event) => {
 
   const result: Item[] = r2.map((i: {
     id: string;
-    common: { title: string; description: string; thumbnailUrl: string[] } }) => {
+    common: { title: string; description: string; thumbnailUrl: string[] }
+  }) => {
     return {
       id: i.id,
       title: i.common.title,

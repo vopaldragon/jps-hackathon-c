@@ -1,4 +1,4 @@
-import { Item } from '~/server/api/search'
+import { Item } from "~~/server/api/readJson.post"
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event)

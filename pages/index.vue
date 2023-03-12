@@ -125,9 +125,7 @@ async function search() {
 }
 
 async function getKeywords() {
-  const response: any = await $fetch(
-    `https://sheets.googleapis.com/v4/spreadsheets/1ydNpNYQ1g8KAoUWUoQ_6YvgPYEk5k08XnUleNsH-n3I/values/%E6%95%B4%E5%BD%A2%E3%83%87%E3%83%BC%E3%82%BF?key=AIzaSyDNPQiu_z4xWcVUZPVRVrGhpTYMd5pFEns`
-  )
+  const response: any = await $fetch("data.json")
   const keys = response.values.splice(0, 1)[0]
   const jsonData = response.values.map(function (row: any[]) {
     var obj = {}
@@ -276,6 +274,9 @@ h1 {
   padding: 1rem;
   background: #f1f1f1;
   text-align: left;
+  p {
+    white-space: pre-wrap;
+  }
 }
 main {
   margin-top: 2rem;
@@ -309,10 +310,10 @@ main {
         -webkit-tap-highlight-color: transparent;
       }
       &.fake {
-        border: 2px solid #D30C2F;
+        border: 2px solid #d30c2f;
         padding: 0.5rem;
         border-radius: 8px;
-        background: #F9D9DE;
+        background: #f9d9de;
       }
     }
   }
